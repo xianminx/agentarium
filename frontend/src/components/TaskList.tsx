@@ -4,7 +4,7 @@ import { useRunTask } from "../hooks/useMutations";
 import { Button } from "@/components/ui/button";
 import {toast } from "sonner";
 
-export default function TaskList() {
+export function TaskList() {
   const [filters, setFilters] = useState({ status: "", agent: "", ordering: "-created_at" });
   const { data, isLoading } = useTasks(filters);
   const { mutateAsync: runTask, isPending: running } = useRunTask();

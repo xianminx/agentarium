@@ -1,44 +1,16 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
+import { router } from "./router";
+import "./index.css";
 
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { Outlet, RouterProvider, createRouter, createRoute, createRootRoute } from '@tanstack/react-router'
-import AgentDetail from './pages/AgentDetail'
-import App from './App'
-import { Toaster } from '@/components/ui/sonner'
+const queryClient = new QueryClient();
 
-const rootRoute = createRootRoute({
-  component: Outlet,
-})
-
-const homeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/',
-  component: App,
-})
-
-const agentDetailRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/agent-detail',
-  component: AgentDetail,
-})
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
-}
-
-const router = createRouter({
-  routeTree: rootRoute.addChildren([
-    homeRoute,
-    agentDetailRoute,
-  ])
-})
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-    <Toaster />
-  </StrictMode>
-)
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
+    </React.StrictMode>
+);

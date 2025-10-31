@@ -4,7 +4,7 @@ import AgentModal from "./AgentModal";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-export default function AgentList() {
+export function AgentList() {
     const { data: agents = [], isLoading } = useAgents();
     const [open, setOpen] = useState(false);
     const [editing, setEditing] = useState<any | null>(null);
