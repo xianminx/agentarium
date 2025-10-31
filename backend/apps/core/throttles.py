@@ -4,12 +4,14 @@ class UserTokenRateThrottle(SimpleRateThrottle):
     scope = "user_token"
 
     def get_cache_key(self, request, view):
-        if not request.user or not request.auth:
+        # If using token-based auth, throttle per token; otherwise per user
+        ident = None
+        if getattr(request, "auth", None):
+            ident = str(request.auth)
+        elif request.user and request.user.is_authenticated:
+            ident = str(request.user.pk)
+        if ident is None:
             return None
-        # request.auth may be token-like; pick unique token id
-        # TODO: fix how to use this token based throttling
-        ident = str(request.auth)
-        return self.cache_format % {
-            "scope": self.scope,
-            "ident": ident
-        }
+        return self.cache_format % {"scope": self.scope, "ident": ident}
+
+    

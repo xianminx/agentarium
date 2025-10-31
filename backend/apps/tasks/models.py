@@ -3,11 +3,17 @@ from django.conf import settings
 from apps.agents.models import Agent
 
 class AgentTask(models.Model):
+
+    STATUS_PENDING = "pending"
+    STATUS_RUNNING = "running"
+    STATUS_COMPLETED = "completed"
+    STATUS_FAILED = "failed"
+
     STATUS_CHOICES = [
-        ("pending","pending"),
-        ("running","running"),
-        ("completed","completed"),
-        ("failed","failed"),
+        (STATUS_PENDING,"pending"),
+        (STATUS_RUNNING,"running"),
+        (STATUS_COMPLETED,"completed"),
+        (STATUS_FAILED,"failed"),
     ]
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name="tasks")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="tasks")
