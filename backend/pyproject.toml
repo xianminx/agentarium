@@ -17,4 +17,25 @@ dependencies = [
     "pytest-cov>=7.0.0",
     "pytest-django>=4.11.1",
     "redis>=7.0.1",
+    "types-django-filter>=25.2.0.20251010",
+]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+python_version = "3.12"
+warn_unused_configs = true
+strict_optional = true
+
+[[tool.mypy.overrides]]
+module = "celery.*"
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "config.settings.base"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11.0",
+    "django-stubs>=5.0.2",
+    "djangorestframework-stubs>=3.16.5",
 ]
