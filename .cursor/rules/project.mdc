@@ -1,0 +1,50 @@
+
+# Agentarium Project Overview
+
+Agentarium is a full-stack application composed of:
+- **Backend**: Django REST Framework backend in `backend/`, following HackSoft Django Styleguide.
+- **Frontend**: React + TypeScript application in `frontend/`, styled with TailwindCSS and shadcn/ui components.
+
+## Architectural Goals
+- Maintain clear separation between backend and frontend.
+- Ensure backend adheres to service/selector pattern with strict typing.
+- Keep frontend modular, type-safe, and visually consistent.
+- Prefer explicit, readable, and maintainable code over clever one-liners.
+
+## Folder Structure
+```
+
+agentarium/
+├── backend/        # Django project
+│   ├── config/     # Settings and app registration
+│   ├── apps/       # Feature-based apps
+│   ├── services/   # Business logic
+│   ├── selectors/  # Query logic
+│   └── tests/      # Pytest-based tests
+└── frontend/       # React project
+├── src/
+│   ├── components/
+│   ├── features/
+│   ├── hooks/
+│   ├── pages/
+│   └── lib/
+└── public/
+
+```
+
+## Coding Conventions
+- Use type annotations in all Python and TypeScript code.
+- Prefer small, focused modules and functions.
+- Document the purpose of each function or component with brief docstrings or comments.
+- Keep consistent naming conventions between backend entities and frontend models.
+
+## Tooling
+- **Backend**: Django, DRF, pytest, mypy, black, isort.
+- **Frontend**: React 18+, Vite, TypeScript, TailwindCSS, shadcn/ui, ESLint, Prettier.
+
+## AI Guidance
+When assisting with code generation or refactoring:
+- Detect which subproject the file belongs to.
+- Apply the relevant styleguide (`backend` → HackSoft; `frontend` → React+TS conventions).
+- Maintain code readability and follow established folder structure.
+

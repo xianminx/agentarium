@@ -1,0 +1,69 @@
+
+# Frontend Overview — React + TypeScript + Tailwind + shadcn/ui
+
+## Architecture
+Frontend is a **React 18** app bootstrapped with **Vite**, written in **TypeScript**, and styled with **TailwindCSS** and **shadcn/ui** components.
+
+```
+
+frontend/
+├── src/
+│   ├── components/     # Shared reusable UI components
+│   ├── features/       # Feature-based modules (state + UI + logic)
+│   ├── hooks/          # Reusable React hooks
+│   ├── lib/            # Utilities and helpers
+│   ├── pages/          # Page-level views for routing
+│   └── types/          # Shared TypeScript types
+└── public/
+
+```
+
+## Conventions
+- Use **functional components** with **hooks**.
+- Use **TypeScript interfaces** for all props and API responses.
+- Avoid using `any`.
+- Keep components small and focused.
+- Use Tailwind utility classes and shadcn/ui primitives.
+- Organize code **by feature** rather than by type.
+- Keep state management local or via lightweight libraries (e.g., Zustand or Context API).
+- Never import the default `React` object. Only import the specific hooks or functions you need: i.e. `import { useState, useEffect } from 'react';`
+- Always use **named exports** for components, **Never** use `export default` for components:
+
+    ```ts
+    export function MyComponent() {
+    return <div>Hello</div>;
+    }
+    ```
+    
+## Styling
+- Use Tailwind utility classes directly in JSX.
+- For complex styling logic, extract class composition into helper functions.
+- Ensure consistent design using shadcn/ui and Tailwind’s theme tokens.
+
+## AI Guidance
+When generating frontend code:
+- Use clear, typed props and state interfaces.
+- Follow file organization conventions.
+- Prefer composable, reusable components.
+- Always write components as functional components with hooks.
+- Provide minimal UI logic in pages; delegate to feature modules or components.
+
+
+
+
+
+Ah! Got it — you’re using the **new `.mdc`-only format**. In this case, **all rules, coding conventions, and AI guidance live in `.mdc` files**, and `.cursorrules` is no longer needed. Cursor reads the `.mdc` files and applies instructions directly.
+
+Here’s how we can **formalize your two frontend rules** in the new `.mdc` style:
+
+---
+
+### 📝 `frontend/frontend.mdc` (updated with your rules)
+
+````markdown
+# Frontend Overview — React + TypeScript + Tailwind + shadcn/ui
+
+## Architecture
+- React 18 + TypeScript app
+- Organized by features: components/, features/, hooks/, pages/, lib/
+- TailwindCSS + shadcn/ui for styling

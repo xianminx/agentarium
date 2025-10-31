@@ -47,3 +47,7 @@ settings/
 │   │   ├── base.py
 │   │   ├── dev.py
 │   │   └── prod.py
+
+
+4. setup cursor rules like instructions for Codex?
+5. how to add selected code in vscode to codex context? 

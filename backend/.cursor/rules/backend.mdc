@@ -1,0 +1,46 @@
+
+# Backend Overview — Django REST Framework (HackSoft Styleguide)
+
+## Core Philosophy
+This backend follows the **HackSoft Django Styleguide**:
+- Keep **models** lean: only field definitions, no business logic.
+- Place **business logic** in dedicated `services/` modules.
+- Place **query logic** in `selectors/` modules.
+- Keep **views** minimal: delegate to services and selectors.
+- Keep **serializers** focused on validation and representation only.
+
+## Structure
+```
+
+backend/
+├── apps/               # Feature-based apps
+│   ├── agents/
+│   ├── users/
+│   └── ...
+├── services/           # Domain logic, reusable across apps
+├── selectors/          # Query and data retrieval utilities
+├── config/             # Django project settings
+└── tests/              # pytest tests
+
+```
+
+## Conventions
+- Each feature app should have its own `services.py` and `selectors.py` if applicable.
+- Avoid placing logic in `views.py` or `models.py`.
+- Use DRF’s `ViewSet` and `ModelSerializer` properly — no direct DB operations in views.
+- Apply `permissions`, `throttling`, and `pagination` explicitly.
+- Test all endpoints via `pytest` and `APIClient`.
+
+## Testing
+- Use **pytest** instead of `unittest`.
+- Organize tests to mirror module paths.
+- Use `model_bakery` or `factory_boy` for data setup.
+- Test both success and failure paths.
+
+## AI Guidance
+When generating or editing backend code:
+- Identify the correct layer (service, selector, serializer, view).
+- Use type hints everywhere.
+- Follow the Django Styleguide principles.
+- Ensure separation of concerns.
+- When unsure, default to creating a service function rather than putting logic in views.
