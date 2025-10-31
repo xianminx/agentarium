@@ -34,6 +34,10 @@ warn_unused_ignores = true
 [tool.django-stubs]
 django_settings_module = "config.settings.base"
 
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.base"
+testpaths = ["tests"]
+
 [[tool.mypy.overrides]]
 module = "celery.*"
 ignore_missing_imports = true

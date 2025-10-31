@@ -23,7 +23,11 @@ def test_agent_list_only_owner(api_client, user):
     Agent.objects.create(owner=user, name="MyAgent")
     resp = api_client.get("/api/agents/")
     assert resp.status_code == 200
-    results = resp.json()
+    payload = resp.json()
+    if isinstance(payload, dict) and "results" in payload:
+        results = payload["results"]
+    else:
+        results = payload
     names = [a["name"] for a in results]
     assert "MyAgent" in names
     assert "OtherAgent" not in names
