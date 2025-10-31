@@ -1,10 +1,11 @@
 
-import React from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Outlet, RouterProvider, createRouter, createRoute, createRootRoute } from '@tanstack/react-router'
 import AgentDetail from './pages/AgentDetail'
 import App from './App'
+import { Toaster } from '@/components/ui/sonner'
 
 const rootRoute = createRootRoute({
   component: Outlet,
@@ -36,7 +37,8 @@ const router = createRouter({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+    <Toaster />
+  </StrictMode>
 )
