@@ -4,7 +4,7 @@ import { api } from '../lib/api'
 export function Projects() {
   const { data, isLoading } = useQuery({
     queryKey: ['projects'],
-    queryFn: () => api.get('/mock/projects').then(r => r.data),
+    queryFn: () => api.get('/api/projects').then(r => r.data),
   })
 
   if (isLoading) return <p>Loading projects...</p>

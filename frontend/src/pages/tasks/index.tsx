@@ -1,6 +1,6 @@
 import  { useState } from "react";
-import { useTasks } from "../hooks/useTasks";
-import { useRunTask } from "../hooks/useMutations";
+import { useTasks } from "@/hooks/useTasks";
+import { useRunTask } from "@/hooks/useMutations";
 import { Button } from "@/components/ui/button";
 import {toast } from "sonner";
 

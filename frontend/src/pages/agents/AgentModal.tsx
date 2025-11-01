@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { useCreateAgent } from "../hooks/useMutations";
+import { useCreateAgent } from "../../hooks/useMutations";
 import { toast } from "sonner"
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
   editing: any | null;
 }
 
-export default function AgentModal({ open, onOpenChange, editing }: Props) {
+export function AgentModal({ open, onOpenChange, editing }: Props) {
   const { register, handleSubmit, reset } = useForm();
   const { mutateAsync, isPending } = useCreateAgent();
 

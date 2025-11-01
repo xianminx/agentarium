@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useAgents } from "../hooks/useAgents";
-import AgentModal from "./AgentModal";
+import { useAgents } from "@/hooks/useAgents";
+import {AgentModal} from "./AgentModal";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
