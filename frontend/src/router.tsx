@@ -1,36 +1,52 @@
-// src/router.tsx
-import { createRouter, createRootRoute, createRoute } from '@tanstack/react-router'
-import { App } from './App'
-import { AgentList } from './components/AgentList'
-import { TaskList } from './components/TaskList'
-import { Home } from './pages/Home'
+import {
+  createRouter,
+  createRootRoute,
+  createRoute,
+} from '@tanstack/react-router'
+import { RootLayout } from '@/layouts/RootLayout'
+import { DashboardLayout } from '@/layouts/DashboardLayout'
+import { Home } from '@/pages/Home'
+import { Dashboard } from '@/pages/Dashboard'
+import { Agents } from '@/pages/Agents'
+import { Projects } from '@/pages/Projects'
 
-// Root layout
 const rootRoute = createRootRoute({
-  component: App,
+  component: RootLayout,
 })
 
-// Child routes
-const homeRoute = createRoute({
+const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: () => <Home />,
+  component: Home,
+})
+
+const dashboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/dashboard',
+  component: DashboardLayout,
+})
+
+const dashboardIndex = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: '/',
+  component: Dashboard,
 })
 
 const agentsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/agents',
-  component: AgentList,
+  getParentRoute: () => dashboardRoute,
+  path: 'agents',
+  component: Agents,
 })
 
-const tasksRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/tasks',
-  component: TaskList,
+const projectsRoute = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: 'projects',
+  component: Projects,
 })
 
-// Route tree
-const routeTree = rootRoute.addChildren([homeRoute, agentsRoute, tasksRoute])
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  dashboardRoute.addChildren([dashboardIndex, agentsRoute, projectsRoute]),
+])
 
-// Export router
 export const router = createRouter({ routeTree })
