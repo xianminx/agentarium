@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export function AgentList() {
-    const { data: agents = [], isLoading } = useAgents();
+    const { data, isLoading } = useAgents();
+    const {results: agents} = data || {results: []};
+    
     const [open, setOpen] = useState(false);
     const [editing, setEditing] = useState<any | null>(null);
 

@@ -1,0 +1,122 @@
+[
+  {
+    "model": "agents.agent",
+    "pk": 1,
+    "fields": {
+      "owner": 2,
+      "name": "Auto-GPT",
+      "description": "Provider: Significant Gravitas. Autonomous open-source agent that breaks complex goals into sub-tasks and executes them with GPT-4/GPT-3.5. Website: https://github.com/Significant-Gravitas/Auto-GPT",
+      "model": "gpt-4o",
+      "temperature": 0.3,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 2,
+    "fields": {
+      "owner": 2,
+      "name": "BabyAGI",
+      "description": "Provider: Yohei Nakajima. Lightweight task-management agent that dynamically creates, prioritizes, and completes to-do lists using vector search. Website: https://github.com/yoheinakajima/babyagi",
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 3,
+    "fields": {
+      "owner": 2,
+      "name": "AgentGPT",
+      "description": "Provider: Reworkd AI. Browser-based launcher that spins up autonomous GPT agents to iterate on goals and surface results in real time. Website: https://agentgpt.reworkd.ai/",
+      "model": "gpt-4.1",
+      "temperature": 0.4,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 4,
+    "fields": {
+      "owner": 2,
+      "name": "Devin",
+      "description": "Provider: Cognition Labs. AI software engineer capable of planning, coding, debugging, and deploying applications inside a persistent dev environment. Website: https://www.cognition-labs.com/",
+      "model": "claude-3.5-sonnet",
+      "temperature": 0.1,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 5,
+    "fields": {
+      "owner": 2,
+      "name": "GPT Engineer",
+      "description": "Provider: GPT Engineer Org. Specification-driven agent that asks clarifying questions, drafts architecture, and scaffolds entire codebases. Website: https://github.com/gpt-engineer-org/gpt-engineer",
+      "model": "gpt-4o-mini",
+      "temperature": 0.25,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 6,
+    "fields": {
+      "owner": 2,
+      "name": "CrewAI",
+      "description": "Provider: CrewAI. Multi-agent orchestration framework that coordinates specialist agents for research, ops, and product workflows. Website: https://www.crewai.com/",
+      "model": "gpt-4o",
+      "temperature": 0.35,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 7,
+    "fields": {
+      "owner": 2,
+      "name": "Perplexity Copilot",
+      "description": "Provider: Perplexity AI. Conversational research agent that performs deep web searches with citations and iterative refinement. Website: https://www.perplexity.ai/copilot",
+      "model": "perplexity-llm",
+      "temperature": 0.5,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 8,
+    "fields": {
+      "owner": 2,
+      "name": "Pi",
+      "description": "Provider: Inflection AI. Personal AI companion focused on empathetic conversation, productivity coaching, and daily planning. Website: https://pi.ai/",
+      "model": "inflection-2.5",
+      "temperature": 0.7,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 9,
+    "fields": {
+      "owner": 2,
+      "name": "Character AI",
+      "description": "Provider: Character Technologies. Platform of customizable AI personas for entertainment, education, and productivity use cases. Website: https://beta.character.ai/",
+      "model": "character-llm",
+      "temperature": 0.6,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "agents.agent",
+    "pk": 10,
+    "fields": {
+      "owner": 2,
+      "name": "Claude Projects",
+      "description": "Provider: Anthropic. Workspace-oriented Claude agent that manages briefs, codebases, and documents with memory and tool use. Website: https://www.anthropic.com/claude",
+      "model": "claude-3.5-sonnet",
+      "temperature": 0.2,
+      "created_at": "2025-11-01T00:00:00Z"
+    }
+  }
+]

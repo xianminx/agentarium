@@ -1,21 +1,29 @@
 from django.db.models import Count, Prefetch
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 
 from apps.core.permissions import IsOwnerOrReadOnly
 from apps.tasks.models import AgentTask
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 from .models import Agent
 from .serializers import AgentSerializer
+from rest_framework.exceptions import PermissionDenied
 
 
 class AgentViewSet(viewsets.ModelViewSet):
     serializer_class = AgentSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
+        user = self.request.user
+        qs = Agent.objects
+
+        if user.is_authenticated:
+            qs = qs.filter(owner=user)
+        
         return (
-            Agent.objects.filter(owner=self.request.user)
+            qs
             .annotate(tasks_count=Count("tasks"))
             .prefetch_related(
                 Prefetch(
@@ -27,4 +35,6 @@ class AgentViewSet(viewsets.ModelViewSet):
         )
  
     def perform_create(self, serializer):
+        if not self.request.user.is_authenticated:
+            raise PermissionDenied("You must be logged in to create an agent.")
         serializer.save(owner=self.request.user)
