@@ -128,18 +128,18 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-
 CORS_ALLOW_ALL_ORIGINS = True
 INSTALLED_APPS += ["corsheaders"]
-MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware"] + MIDDLEWARE
+MIDDLEWARE += [
+    "corsheaders.middleware.CorsMiddleware",
+    "apps.core.middleware.RequestLoggingMiddleware",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
-    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.OrderingFilter",
@@ -153,4 +153,25 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "user": "60/min",  # example, adjust as needed
     },
+    "EXCEPTION_HANDLER": "apps.core.exceptions.custom_exception_handler",
 }
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    }
+}
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # React dev
+]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = False  # enable in prod
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

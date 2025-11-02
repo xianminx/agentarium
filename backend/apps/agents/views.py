@@ -8,6 +8,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from .models import Agent
 from .serializers import AgentSerializer
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from apps.tasks.cache import get_cached_agents
 
 
 class AgentViewSet(viewsets.ModelViewSet):
@@ -38,3 +41,9 @@ class AgentViewSet(viewsets.ModelViewSet):
         if not self.request.user.is_authenticated:
             raise PermissionDenied("You must be logged in to create an agent.")
         serializer.save(owner=self.request.user)
+
+
+class AgentListCachedView(APIView):
+    def get(self, request):
+        agents = get_cached_agents()
+        return Response(agents)
