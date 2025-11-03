@@ -4,9 +4,13 @@ from rest_framework.test import APIClient
 
 User = get_user_model()
 
+
 @pytest.fixture
 def user(db):
-    return User.objects.create_user(username="testuser", email="t@t.com", password="pass")
+    return User.objects.create_user(
+        username="testuser", email="t@t.com", password="pass"
+    )
+
 
 @pytest.fixture
 def api_client(user):

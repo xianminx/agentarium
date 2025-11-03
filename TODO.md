@@ -55,3 +55,11 @@ settings/
 
 
 6. Add a Login/Signup Button to Navbar to the right most. If logged in, show user avatar with dropdown menu for Profile, Settings, Logout.
+
+
+
+### Tickets
+
+1. Add a Login/Signup Button to Navbar to the right most. If logged in, show user avatar with dropdown menu for Profile, Settings, Logout. Add routes and pages for Login, Signup, Profile, Settings. You may make a plan for the backend and the fronend, let me approve, and then continue to implement it. remember to check the rules in backend/.cursor/rules and frontend/.cursor/rules before implementing. For backend python code, add 1 comprehensive test case, covering all the new features you added.
+
+

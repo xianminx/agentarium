@@ -21,5 +21,6 @@ from apps.tasks.sse import task_stream_view
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("apps.api.urls")),
+    path("api/auth/", include("apps.users.urls")),
     path("stream/tasks/", task_stream_view, name="task-stream"),
 ]
