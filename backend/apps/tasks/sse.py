@@ -1,10 +1,9 @@
-
-
 import json
 import time
 from django.http import StreamingHttpResponse
 from django.utils.timezone import now
 from .models import AgentTask
+
 
 def task_event_stream():
     """Generator yielding updates every 2 seconds."""
@@ -24,6 +23,7 @@ def task_event_stream():
             yield f"data: {json.dumps(data)}\n\n"
 
         time.sleep(2)
+
 
 def task_stream_view(request):
     response = StreamingHttpResponse(

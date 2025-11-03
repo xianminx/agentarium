@@ -5,6 +5,7 @@ from .models import AgentTask
 # Import the openai wrapper to call the model (mockable in tests)
 from utils.openai_client import run_agent_sync
 
+
 @shared_task(bind=True)
 def run_agent_task_async(self, task_id):
     """

@@ -1,5 +1,3 @@
-
-
 from rest_framework.routers import DefaultRouter
 from apps.agents.views import AgentViewSet
 from apps.tasks.views import TaskViewSet

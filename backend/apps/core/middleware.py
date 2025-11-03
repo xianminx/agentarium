@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class RequestLoggingMiddleware:
     """Log request path, user, IP, and latency."""
 
@@ -17,6 +18,8 @@ class RequestLoggingMiddleware:
         response = self.get_response(request)
 
         duration = (time.time() - start) * 1000
-        logger.info(f"[{user}] {request.method} {request.path} "
-                    f"{response.status_code} {duration:.2f}ms from {ip}")
+        logger.info(
+            f"[{user}] {request.method} {request.path} "
+            f"{response.status_code} {duration:.2f}ms from {ip}"
+        )
         return response

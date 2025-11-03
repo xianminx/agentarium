@@ -24,19 +24,15 @@ class AgentViewSet(viewsets.ModelViewSet):
 
         if user.is_authenticated:
             qs = qs.filter(owner=user)
-        
-        return (
-            qs
-            .annotate(tasks_count=Count("tasks"))
-            .prefetch_related(
-                Prefetch(
-                    "tasks",
-                    queryset=AgentTask.objects.order_by("-created_at"),
-                    to_attr="recent_tasks",
-                )
+
+        return qs.annotate(tasks_count=Count("tasks")).prefetch_related(
+            Prefetch(
+                "tasks",
+                queryset=AgentTask.objects.order_by("-created_at"),
+                to_attr="recent_tasks",
             )
         )
- 
+
     def perform_create(self, serializer):
         if not self.request.user.is_authenticated:
             raise PermissionDenied("You must be logged in to create an agent.")
