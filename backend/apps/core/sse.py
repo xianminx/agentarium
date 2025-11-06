@@ -54,7 +54,6 @@ def signal_stream_view(request):
         except InvalidToken:
             return JsonResponse({"error": "Invalid token"}, status=401)
 
-    print("Authenticated user:", request.user)
     # Check if user is authenticated and is a superuser
     if not request.user.is_authenticated:
         return JsonResponse({"error": "Authentication required"}, status=401)

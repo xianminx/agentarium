@@ -13,9 +13,19 @@ class RequestLoggingMiddleware:
     def __call__(self, request):
         start = time.time()
         ip = request.META.get("REMOTE_ADDR")
-        user = getattr(request.user, "username", "anon")
 
         response = self.get_response(request)
+
+        # Get user after response (view has processed, DRF auth has run)
+        user = "anon"
+        if hasattr(request, "user"):
+            if (
+                hasattr(request.user, "is_authenticated")
+                and request.user.is_authenticated
+            ):
+                user = request.user.username
+            elif hasattr(request.user, "username"):
+                user = request.user.username
 
         duration = (time.time() - start) * 1000
         logger.info(

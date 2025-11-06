@@ -30,9 +30,9 @@ export function SignalMonitor() {
   const [autoScroll, setAutoScroll] = useState(true);
 
   useEffect(() => {
-    // if (!user?.is_superuser) {
-    //   return;
-    // }
+    if (!user?.is_superuser) {
+      return;
+    }
 
     // Create EventSource for SSE
     const token = localStorage.getItem("token");
@@ -107,24 +107,24 @@ export function SignalMonitor() {
     return new Date(timestamp).toLocaleString();
   };
 
-  // if (!user?.is_superuser) {
-  //   return (
-  //     <div className="container mx-auto max-w-6xl px-4 py-8">
-  //       <Card className="border-red-500/50 bg-red-900/10">
-  //         <CardHeader>
-  //           <CardTitle className="text-red-500 flex items-center gap-2">
-  //             <AlertCircle className="h-6 w-6" />
-  //             Access Denied
-  //           </CardTitle>
-  //           <CardDescription className="text-red-400">
-  //             You need superuser privileges to access the signal monitoring
-  //             dashboard.
-  //           </CardDescription>
-  //         </CardHeader>
-  //       </Card>
-  //     </div>
-  //   );
-  // }
+  if (!user?.is_superuser) {
+    return (
+      <div className="container mx-auto max-w-6xl px-4 py-8">
+        <Card className="border-red-500/50 bg-red-900/10">
+          <CardHeader>
+            <CardTitle className="text-red-500 flex items-center gap-2">
+              <AlertCircle className="h-6 w-6" />
+              Access Denied
+            </CardTitle>
+            <CardDescription className="text-red-400">
+              You need superuser privileges to access the signal monitoring
+              dashboard.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8">

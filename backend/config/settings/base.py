@@ -189,3 +189,104 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+# Logging Configuration
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname:8s} {name}: {message}",
+            "style": "{",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "simple": {
+            "format": "{levelname:8s} {message}",
+            "style": "{",
+        },
+        "access": {
+            "format": "[{asctime}] {message}",
+            "style": "{",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        # Development handlers - verbose logging
+        "console_dev": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        # Production handlers - concise logging
+        "console_prod": {
+            "level": "WARNING",
+            "filters": ["require_debug_false"],
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        # Access log handler
+        "console_access": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "access",
+        },
+    },
+    "loggers": {
+        # Django's built-in loggers
+        "django": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "django.server": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        # Access logs from middleware
+        "apps.core.middleware": {
+            "handlers": ["console_access"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        # Your app loggers - verbose in dev, warnings only in prod
+        "apps.core": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "apps.users": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "apps.agents": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "apps.tasks": {
+            "handlers": ["console_dev", "console_prod"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+    "root": {
+        "handlers": ["console_dev", "console_prod"],
+        "level": "INFO",
+    },
+}

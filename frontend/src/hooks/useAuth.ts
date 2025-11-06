@@ -65,7 +65,7 @@ export function useAuth(): AuthState & {
       try {
         const response = await api.get("/auth/me/");
         return response.data;
-      } catch (error) {
+      } catch {
         // If token is invalid, clear it
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
