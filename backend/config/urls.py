@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.tasks.sse import task_stream_view
+from apps.core.sse import signal_stream_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("apps.api.urls")),
     path("api/auth/", include("apps.users.urls")),
     path("stream/tasks/", task_stream_view, name="task-stream"),
+    path("stream/signals/", signal_stream_view, name="signal-stream"),
 ]

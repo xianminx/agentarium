@@ -10,6 +10,7 @@ export interface User {
   last_name: string;
   date_joined: string;
   last_login: string | null;
+  is_superuser: boolean;
 }
 
 interface AuthTokens {

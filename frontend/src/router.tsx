@@ -8,6 +8,7 @@ import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { Home } from '@/pages/Home'
 import { Dashboard } from '@/pages/Dashboard'
 import { AgentList as Agents } from '@/pages/agents'
+import { AgentDetail } from '@/pages/agents/AgentDetail'
 import { TaskList as Tasks } from '@/pages/tasks'
 import { Projects } from '@/pages/Projects'
 import { Users } from './pages/users'
@@ -15,6 +16,7 @@ import { Login } from '@/pages/Login'
 import { Signup } from '@/pages/Signup'
 import { Profile } from '@/pages/Profile'
 import { Settings } from '@/pages/Settings'
+import { SignalMonitor } from '@/pages/SignalMonitor'
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -56,6 +58,11 @@ const agentsRoute = createRoute({
   component: Agents,
 })
 
+const agentDetailRoute = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: 'agents/$id',
+  component: AgentDetail,
+})
 
 const tasksRoute = createRoute({
   getParentRoute: () => dashboardRoute,
@@ -87,6 +94,12 @@ const settingsRoute = createRoute({
   component: Settings,
 })
 
+const signalMonitorRoute = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: 'signals',
+  component: SignalMonitor,
+})
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -94,11 +107,13 @@ const routeTree = rootRoute.addChildren([
   dashboardRoute.addChildren([
     dashboardIndex,
     agentsRoute,
+    agentDetailRoute,
     projectsRoute,
     tasksRoute,
     usersRoute,
     profileRoute,
     settingsRoute,
+    signalMonitorRoute,
   ]),
 ])
 
