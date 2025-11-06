@@ -12,8 +12,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "email", "first_name", "last_name", "date_joined"]
-        read_only_fields = ["id", "date_joined"]
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "date_joined",
+            "is_superuser",
+        ]
+        read_only_fields = ["id", "date_joined", "is_superuser"]
 
 
 class UserRegistrationSerializer(serializers.Serializer):
@@ -88,8 +96,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "last_name",
             "date_joined",
             "last_login",
+            "is_superuser",
         ]
-        read_only_fields = ["id", "username", "date_joined", "last_login"]
+        read_only_fields = [
+            "id",
+            "username",
+            "date_joined",
+            "last_login",
+            "is_superuser",
+        ]
 
     def validate_email(self, value: str) -> str:
         """Validate email is unique (excluding current user)."""
