@@ -33,14 +33,22 @@ def run_agent_sync(agent, prompt, max_tokens=1024):
     model = getattr(agent, "model", "gpt-4o-mini")
     temperature = getattr(agent, "temperature", 0.7)
 
-    client = _get_client()
-    response = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    return response.choices[0].message.content
+    # If no API key is configured, return a mock response for development
+    if not OPENAI_API_KEY:
+        return f"[Mock Response] I received your message: '{prompt[:100]}...'\n\nThis is a simulated response because no OpenAI API key is configured. To use real AI responses, please set OPENAI_API_KEY in your environment."
+
+    try:
+        client = _get_client()
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        # Fallback to mock response if API call fails
+        return f"[Error] Failed to get AI response: {str(e)}\n\nThis is a fallback mock response."

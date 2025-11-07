@@ -16,14 +16,14 @@ def run_agent_task_async(self, task_id):
         task = AgentTask.objects.select_related("agent").get(pk=task_id)
         task.status = AgentTask.STATUS_RUNNING
         task.started_at = timezone.now()
-        task.save(update_fields=["status", "started_at"])
+        task.save(update_fields=["status", "started_at", "updated_at"])
 
         # call OpenAI wrapper
         output = run_agent_sync(task.agent, task.input_text)
         task.output_text = output
         task.status = AgentTask.STATUS_COMPLETED
         task.finished_at = timezone.now()
-        task.save(update_fields=["output_text", "status", "finished_at"])
+        task.save(update_fields=["output_text", "status", "finished_at", "updated_at"])
         return {"status": "ok"}
     except Exception as ex:
         # mark failed
@@ -31,7 +31,7 @@ def run_agent_task_async(self, task_id):
             task = AgentTask.objects.get(pk=task_id)
             task.status = AgentTask.STATUS_FAILED
             task.finished_at = timezone.now()
-            task.save(update_fields=["status", "finished_at"])
+            task.save(update_fields=["status", "finished_at", "updated_at"])
         except Exception:
             pass
         raise
