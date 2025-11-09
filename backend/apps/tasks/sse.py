@@ -16,9 +16,16 @@ def task_event_stream():
         for task in updates:
             data = {
                 "id": task.id,
+                "agent": task.agent_id,
                 "status": task.status,
-                "output": task.output or "",
+                "output_text": task.output_text or "",
+                "input_text": task.input_text,
+                "created_at": task.created_at.isoformat(),
                 "updated_at": task.updated_at.isoformat(),
+                "started_at": task.started_at.isoformat() if task.started_at else None,
+                "finished_at": task.finished_at.isoformat()
+                if task.finished_at
+                else None,
             }
             yield f"data: {json.dumps(data)}\n\n"
 
