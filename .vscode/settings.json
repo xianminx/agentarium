@@ -8,5 +8,6 @@
     "python.analysis.extraPaths": [
         "${workspaceFolder}/backend"
     ],
-    "python.envFile": "${workspaceFolder}/backend/.env"
+    "python.envFile": "${workspaceFolder}/backend/.env",
+    "chatgpt.openOnStartup": true
 }
