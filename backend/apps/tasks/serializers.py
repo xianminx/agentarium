@@ -15,7 +15,14 @@ class AgentTaskSerializer(serializers.ModelSerializer):
             "output_text",
             "status",
             "created_at",
+            "updated_at",
             "started_at",
             "finished_at",
         ]
-        read_only_fields = ["output_text", "status", "started_at", "finished_at"]
+        read_only_fields = [
+            "output_text",
+            "status",
+            "updated_at",
+            "started_at",
+            "finished_at",
+        ]

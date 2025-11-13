@@ -22,8 +22,8 @@ class AgentViewSet(viewsets.ModelViewSet):
         user = self.request.user
         qs = Agent.objects
 
-        if user.is_authenticated:
-            qs = qs.filter(owner=user)
+        # if user.is_authenticated:
+        #     qs = qs.filter(owner=user)
 
         return qs.annotate(tasks_count=Count("tasks")).prefetch_related(
             Prefetch(

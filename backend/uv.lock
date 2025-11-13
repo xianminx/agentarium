@@ -13,6 +13,7 @@ dependencies = [
     { name = "django-filter" },
     { name = "django-stubs" },
     { name = "django-stubs-ext" },
+    { name = "django-unfold" },
     { name = "djangorestframework" },
     { name = "djangorestframework-simplejwt" },
     { name = "factory-boy" },
@@ -41,6 +42,7 @@ requires-dist = [
     { name = "django-filter", specifier = ">=25.2" },
     { name = "django-stubs", specifier = ">=5.2.7" },
     { name = "django-stubs-ext", specifier = ">=5.2.7" },
+    { name = "django-unfold", specifier = ">=0.69.0" },
     { name = "djangorestframework", specifier = ">=3.16.1" },
     { name = "djangorestframework-simplejwt", specifier = ">=5.5.1" },
     { name = "factory-boy", specifier = ">=3.3.3" },
@@ -333,6 +335,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/9b/6f/a0bab0e6a7676ab3ca02d51b459444e9bd6dd747e3a43b9c24cae6d0a1c6/django_stubs_ext-5.2.7.tar.gz", hash = "sha256:b690655bd4cb8a44ae57abb314e0995dc90414280db8f26fff0cb9fb367d1cac", size = 6524, upload-time = "2025-10-08T08:00:38.895Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f8/c9/60445606e26706d3fccadf3b80ee1a9f32c1012683ff2ada7580937b2da9/django_stubs_ext-5.2.7-py3-none-any.whl", hash = "sha256:0466a7132587d49c5bbe12082ac9824d117a0dedcad5d0ada75a6e0d3aca6f60", size = 9979, upload-time = "2025-10-08T08:00:37.499Z" },
+]
+
+[[package]]
+name = "django-unfold"
+version = "0.69.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b4/97/df11563e2e606058d6cf701df99edd1b730cc6a6830a527b062c8a6504f9/django_unfold-0.69.0.tar.gz", hash = "sha256:2123ebf3850da5dddd0ebf86a016a8235e87880e080773eb05bdcf87cd3cbd40", size = 1098626, upload-time = "2025-10-27T08:56:42.642Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/37/68/e2a819b70bb9ea479be7b3b615ea3461b0c0a2e4d156fce08fa84220e434/django_unfold-0.69.0-py3-none-any.whl", hash = "sha256:c076c962606965e8b1f815e4c8f0e439a685fb29dde62f18a097a3f796e70b60", size = 1210707, upload-time = "2025-10-27T08:56:40.995Z" },
 ]
 
 [[package]]

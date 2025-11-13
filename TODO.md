@@ -54,33 +54,17 @@ settings/
 
 
 
-6. Add a Login/Signup Button to Navbar to the right most. If logged in, show user avatar with dropdown menu for Profile, Settings, Logout.
+~~6. Add a Login/Signup Button to Navbar to the right most. If logged in, show user avatar with dropdown menu for Profile, Settings, Logout.~~
 
 
 
-### Tickets
-
-1. Add a Login/Signup Button to Navbar to the right most. If logged in, show user avatar with dropdown menu for Profile, Settings, Logout. Add routes and pages for Login, Signup, Profile, Settings. You may make a plan for the backend and the fronend, let me approve, and then continue to implement it. remember to check the rules in backend/.cursor/rules and frontend/.cursor/rules before implementing. For backend python code, add 1 comprehensive test case, covering all the new features you added.
-
-
+Ticket, 
+Now we have a list of agents, could you help me implement a chat interface for each agent? It would be great if it can be reused with agenttask detail page or share as much code as possible. 
+When I click on an agent from the list, it should open a chat page where I can send messages to the agent and receive responses. the chat interface should display the conversation history between me and the agent, with my messages aligned to the right and the agent's responses aligned to the left.
 
 
 
+How to debug/trace a django app in vscode?
 
-Could you help check if the RequestLoggingMiddleware is logging correctly, the console shows the following log: 
 
-[1] [06/Nov/2025 12:35:03] "GET /stream/signals/?token=null HTTP/1.1" 401 26
-[1] [06/Nov/2025 12:36:24] "OPTIONS /api/auth/logout/ HTTP/1.1" 200 0
-[1] [06/Nov/2025 12:36:24] "POST /api/auth/logout/ HTTP/1.1" 200 37
-[1] [06/Nov/2025 12:36:33] "POST /api/auth/login/ HTTP/1.1" 200 489
-[1] [06/Nov/2025 12:36:33] "GET /api/auth/me/ HTTP/1.1" 200 128
-[1] [06/Nov/2025 12:36:39] "GET /api/auth/me/ HTTP/1.1" 200 128
-[1] Unauthorized: /stream/signals/
-[1] [06/Nov/2025 12:36:39] "GET /stream/signals/?token=null HTTP/1.1" 401 26
-[1] Unauthorized: /stream/signals/
-[1] [06/Nov/2025 12:36:40] "GET /stream/signals/?token=null HTTP/1.1" 401 26
-[1] [06/Nov/2025 12:37:20] "OPTIONS /api/auth/me/ HTTP/1.1" 200 0
-[1] Unauthorized: /stream/signals/
-[1] [06/Nov/2025 12:37:20] "GET /stream/signals/?token=null HTTP/1.1" 401 26
-[1] [06/Nov/2025 12:37:20] "GET /api/auth/me/ HTTP/1.1" 200 128
-[1] Unauthorized: /stream/signals/
+The react frontend is serving in 5173, and django backend in 8000, how can I make django admin /admin work properly with the frontend? 
