@@ -310,6 +310,11 @@ RATES = {
 
 ## 8. MVP 范围（8 周）
 
+> 排期已按"管道为自有资产"的前提修订，逐周计划见
+> [05-recruiting-build.md §4](./05-recruiting-build.md#4-修订后的-8-周计划)。
+> 净变化：连接器与动作出口从约 3 周压到约 1 周，省出的时间全部投进第 4–6 周的飞轮。
+
+
 **做：**
 - CSV 导入 + 一种连接器（按 03 的推荐：LinkedIn 人才搜索）
 - 自然语言 → AgentColumn（自动生成 output_schema + plan）

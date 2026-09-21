@@ -11,6 +11,7 @@
 | [02-product-options.md](./02-product-options.md) | 5 个产品方案的 PRD/MVP 对比与打分 |
 | [03-gtm-strategy.md](./03-gtm-strategy.md) | 市场切入策略：beachhead 选择、定价、90 天计划 |
 | [04-mvp-prd.md](./04-mvp-prd.md) | 推荐方案的完整 PRD：数据模型、执行语义、Evidence schema、计费 |
+| [05-recruiting-build.md](./05-recruiting-build.md) | 招聘垂直落地方案：资产映射、合规窗口、列模板、风险登记 |
 | [prototype/index.html](./prototype/index.html) | 可交互原型（单文件，浏览器直接打开）：[在线版本](https://claude.ai/artifact/UHcW78f4o2mhL2evjTi5g8) |
 
 ## 原型
@@ -37,3 +38,7 @@
 但没有人把"这一列历史准确率 87%、上周你改过 12 个格子、v18 相比 v17 提升 9 个点"做成产品原语。
 
 护城河不是表格，不是 evidence，是 **correction → eval → version 这个飞轮**。
+
+而在招聘这个 beachhead 上，这个飞轮同时是合规要求：EU AI Act Annex III 把候选人评估
+与名单排序列为高风险，要求记录留存、透明度、human-in-the-loop 和准确性 —— 逐项对应飞轮的四个对象。
+适用日期 2027-12-02，罚则至 €15M 或全球营业额 3%。**差异化和采购理由在这里是同一件事。**
