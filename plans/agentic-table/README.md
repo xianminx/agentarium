@@ -11,6 +11,20 @@
 | [02-product-options.md](./02-product-options.md) | 5 个产品方案的 PRD/MVP 对比与打分 |
 | [03-gtm-strategy.md](./03-gtm-strategy.md) | 市场切入策略：beachhead 选择、定价、90 天计划 |
 | [04-mvp-prd.md](./04-mvp-prd.md) | 推荐方案的完整 PRD：数据模型、执行语义、Evidence schema、计费 |
+| [prototype/index.html](./prototype/index.html) | 可交互原型（单文件，浏览器直接打开）：[在线版本](https://claude.ai/artifact/UHcW78f4o2mhL2evjTi5g8) |
+
+## 原型
+
+`prototype/index.html` 是 04 号 PRD 的可点击版本，三个视图：
+
+- **Table** — agent 列的列头即仪表盘（准确率 / n / 改写率 / 单行成本 / 弃权率）；
+  点任意 cell 看逐步证据链；点列头 `Run on 6 rows` 观察 pending → running → filled/abstained。
+- **Review** — 键盘驱动（J 确认 / K 修正 / D 驳回），每次裁决**实时改变列头的准确率数字**。
+  这是整个产品的核心演示。
+- **Versions** — 把候选版本在 golden set 上回放，看 Δ 准确率 / Δ 弃权率 / Δ 成本 + 回归清单，
+  跑赢才允许 promote。
+
+数据为演示用虚构公司，agent 运行是定时器模拟，不是真实研究。
 
 ## 一句话结论
 
