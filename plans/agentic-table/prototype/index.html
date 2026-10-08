@@ -1,0 +1,841 @@
+<title>Verified Columns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --paper:#F2F4F1; --surface:#FBFCFA; --surface-2:#E9ECE7;
+  --ink:#171A18; --ink-2:#4A524C; --ink-3:#7C857E;
+  --rule:#D5DAD3; --rule-strong:#B9C0B6;
+  --accent:#1F5F4B; --accent-soft:#DCE9E2; --accent-ink:#154237;
+  --warn:#9A7008; --warn-soft:#F3E9CE;
+  --bad:#A8412C; --bad-soft:#F3DED8;
+  --idle:#8A938C;
+  --shadow:0 1px 2px rgba(23,26,24,.06), 0 8px 24px -12px rgba(23,26,24,.18);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101311; --surface:#171B18; --surface-2:#1F2521;
+    --ink:#E8EDE8; --ink-2:#A8B2AA; --ink-3:#7A847C;
+    --rule:#2A312C; --rule-strong:#3A433D;
+    --accent:#5FC0A1; --accent-soft:#17312A; --accent-ink:#8FD9C1;
+    --warn:#D6A939; --warn-soft:#332913;
+    --bad:#E08268; --bad-soft:#36211B;
+    --idle:#6B746D;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101311; --surface:#171B18; --surface-2:#1F2521;
+  --ink:#E8EDE8; --ink-2:#A8B2AA; --ink-3:#7A847C;
+  --rule:#2A312C; --rule-strong:#3A433D;
+  --accent:#5FC0A1; --accent-soft:#17312A; --accent-ink:#8FD9C1;
+  --warn:#D6A939; --warn-soft:#332913;
+  --bad:#E08268; --bad-soft:#36211B;
+  --idle:#6B746D;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:14px; line-height:1.5;
+  margin:0; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:16px; padding-block:0 56px}
+h1,h2,h3{font-family:var(--serif); font-weight:600; text-wrap:balance; margin:0}
+.lbl{
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3);
+}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.mast{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.mast-in{
+  max-width:1180px; margin:0 auto; padding-inline:16px;
+  padding-block:11px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.brand{display:flex; align-items:baseline; gap:9px; margin-right:auto}
+.brand h1{font-size:17px; letter-spacing:-.01em}
+.brand .v{font-family:var(--mono); font-size:10px; color:var(--ink-3)}
+.demo-chip{
+  font-family:var(--mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--warn); background:var(--warn-soft);
+  border:1px solid color-mix(in srgb, var(--warn) 38%, transparent);
+  padding:3px 8px; border-radius:3px;
+}
+.tabs{display:flex; gap:2px; background:var(--surface-2); padding:3px; border-radius:7px}
+.tabs button{
+  font:500 12px/1 var(--sans); color:var(--ink-2); background:none; border:0;
+  padding:7px 13px; border-radius:5px; cursor:pointer;
+}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:var(--shadow)}
+.tabs button:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+
+/* ---------- intro ---------- */
+.intro{padding-block:26px 20px; border-bottom:1px solid var(--rule); margin-bottom:22px}
+.intro h2{font-size:clamp(23px,4.2vw,33px); line-height:1.16; letter-spacing:-.018em; max-width:20ch}
+.intro p{color:var(--ink-2); max-width:62ch; margin:11px 0 0; font-size:14.5px}
+.intro .em{color:var(--ink); font-weight:500; box-shadow:inset 0 -.42em 0 var(--accent-soft)}
+
+/* ---------- shared ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:9px}
+.scroller{overflow-x:auto; -webkit-overflow-scrolling:touch}
+button.act{
+  font:500 12px/1 var(--sans); cursor:pointer; border-radius:6px;
+  padding:8px 13px; border:1px solid var(--rule-strong);
+  background:var(--surface); color:var(--ink);
+}
+button.act:hover{border-color:var(--ink-3)}
+button.act:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+button.act.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] button.act.primary,
+:root:not([data-theme="light"]) button.act.primary{color:#0B1511}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) button.act.primary{color:#fff}}
+button.act[disabled]{opacity:.45; cursor:not-allowed}
+
+/* ---------- table ---------- */
+table{border-collapse:separate; border-spacing:0; width:100%; min-width:940px}
+thead th{
+  text-align:left; vertical-align:bottom; padding:0;
+  border-bottom:1px solid var(--rule-strong); background:var(--surface);
+  position:sticky; top:0; z-index:2;
+}
+.th-static{padding:14px 14px 13px; font:500 12px/1 var(--sans); color:var(--ink-2)}
+.th-agent{padding:11px 14px 10px; min-width:212px; border-left:1px solid var(--rule)}
+.th-agent .top{display:flex; align-items:center; gap:7px; margin-bottom:9px}
+.th-agent .nm{font:600 13px/1.2 var(--sans); color:var(--ink)}
+.vpill{
+  font-family:var(--mono); font-size:10px; font-weight:500; color:var(--accent-ink);
+  background:var(--accent-soft); padding:2px 6px; border-radius:3px; white-space:nowrap;
+}
+.gauge{display:grid; grid-template-columns:auto 1fr auto; gap:5px 8px; align-items:center}
+.gauge .g-lbl{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3)}
+.gauge .g-val{font-family:var(--mono); font-size:12px; font-weight:600; font-variant-numeric:tabular-nums}
+.gauge .g-delta{font-family:var(--mono); font-size:10px; color:var(--accent); font-variant-numeric:tabular-nums}
+.bar{height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden}
+.bar i{display:block; height:100%; background:var(--accent); border-radius:2px; transition:width .5s cubic-bezier(.3,.7,.3,1)}
+.th-agent .foot{
+  display:flex; gap:12px; margin-top:9px; padding-top:8px; border-top:1px dashed var(--rule);
+  font-family:var(--mono); font-size:10px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+}
+.th-agent .runbtn{
+  margin-top:9px; width:100%; font:500 11px/1 var(--sans); cursor:pointer;
+  padding:6px; border-radius:5px; border:1px solid var(--rule-strong);
+  background:var(--surface-2); color:var(--ink-2);
+}
+.th-agent .runbtn:hover{color:var(--ink); border-color:var(--ink-3)}
+.th-agent .runbtn:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+
+tbody td{border-bottom:1px solid var(--rule); padding:0; vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+.td-static{padding:11px 14px}
+.ent-name{font-weight:500; font-size:13.5px}
+.ent-sub{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); margin-top:2px}
+.td-num{padding:11px 14px; font-family:var(--mono); font-size:12.5px; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.cell{
+  width:100%; height:100%; min-height:52px; border:0; border-left:1px solid var(--rule);
+  background:none; cursor:pointer; text-align:left; padding:10px 14px;
+  display:flex; align-items:center; gap:9px; font-family:inherit; color:inherit;
+}
+.cell:hover{background:var(--surface-2)}
+.cell:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.cell.sel{background:var(--accent-soft)}
+.cell .v{font-family:var(--mono); font-size:14px; font-weight:600; font-variant-numeric:tabular-nums}
+.cell .meta{font-family:var(--mono); font-size:10px; color:var(--ink-3); margin-left:auto; text-align:right; line-height:1.35}
+.dot{width:6px; height:6px; border-radius:50%; flex:none}
+.s-filled .dot{background:var(--accent)}
+.s-confirmed .dot{background:var(--accent)}
+.s-corrected .dot{background:var(--bad)}
+.s-abstained .dot{background:var(--warn)}
+.s-pending .dot{background:var(--idle)}
+.s-running .dot{background:var(--accent); animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.s-running .dot{animation:none}}
+.s-abstained .v{color:var(--warn); font-size:11px; font-weight:500; letter-spacing:.04em; text-transform:uppercase}
+.s-pending .v,.s-running .v{color:var(--ink-3); font-size:11px; font-weight:500}
+.low-conf{box-shadow:inset 3px 0 0 var(--warn)}
+.chk{font-family:var(--mono); font-size:10px; color:var(--accent); font-weight:600}
+.chk.corr{color:var(--bad)}
+
+/* ---------- drawer ---------- */
+.drawer{margin-top:18px; padding:18px}
+.drawer .hd{display:flex; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:15px}
+.drawer h3{font-size:17px; letter-spacing:-.01em}
+.drawer .hd .sub{font-family:var(--mono); font-size:11px; color:var(--ink-3); margin-top:3px}
+.verdict{
+  margin-left:auto; display:flex; align-items:baseline; gap:9px;
+  border:1px solid var(--rule); border-radius:7px; padding:9px 14px; background:var(--surface-2);
+}
+.verdict .big{font-family:var(--mono); font-size:25px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
+.verdict .cf{font-family:var(--mono); font-size:11px; color:var(--ink-3)}
+.steps{list-style:none; margin:0; padding:0; border-left:2px solid var(--rule); display:flex; flex-direction:column; gap:13px}
+.steps li{position:relative; padding-left:17px}
+.steps li::before{
+  content:""; position:absolute; left:-5px; top:6px; width:8px; height:8px;
+  border-radius:50%; background:var(--surface); border:2px solid var(--rule-strong);
+}
+.steps li.out::before{background:var(--accent); border-color:var(--accent)}
+.st-k{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.st-b{font-size:13px; margin-top:2px}
+.quote{
+  font-family:var(--serif); font-size:13.5px; color:var(--ink-2);
+  border-left:2px solid var(--accent); padding:4px 0 4px 11px; margin-top:6px;
+}
+.src{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); margin-top:4px; word-break:break-all}
+.crit{list-style:none; margin:9px 0 0; padding:0; display:flex; flex-direction:column; gap:5px}
+.crit li{display:flex; gap:9px; align-items:baseline; font-size:13px}
+.crit .mk{font-family:var(--mono); font-size:12px; width:13px; flex:none; text-align:center}
+.mk.yes{color:var(--accent)} .mk.no{color:var(--bad)} .mk.unk{color:var(--warn)}
+.crit .cn{color:var(--ink-2)}
+.crit .cv{margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--ink-3)}
+.runfoot{
+  display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; padding-top:13px;
+  border-top:1px solid var(--rule); font-family:var(--mono); font-size:10.5px; color:var(--ink-3);
+}
+.runfoot b{color:var(--ink-2); font-weight:500}
+.empty{padding:34px 18px; text-align:center; color:var(--ink-3); font-size:13px}
+
+/* ---------- review ---------- */
+.rev-grid{display:grid; grid-template-columns:1fr; gap:16px}
+@media(min-width:840px){.rev-grid{grid-template-columns:1.55fr 1fr}}
+.rev-main{padding:20px}
+.rev-top{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+.prog{flex:1; min-width:120px; height:3px; background:var(--surface-2); border-radius:2px; overflow:hidden}
+.prog i{display:block; height:100%; background:var(--accent); transition:width .3s}
+.rev-q{font-family:var(--serif); font-size:19px; line-height:1.3; margin:0 0 4px; text-wrap:balance}
+.keys{display:flex; gap:7px; flex-wrap:wrap; margin-top:18px; padding-top:15px; border-top:1px solid var(--rule)}
+.key{
+  display:flex; align-items:center; gap:7px; cursor:pointer;
+  border:1px solid var(--rule-strong); background:var(--surface); color:var(--ink);
+  border-radius:6px; padding:8px 11px; font:500 12px/1 var(--sans);
+}
+.key:hover{border-color:var(--ink-3)}
+.key:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.key kbd{
+  font-family:var(--mono); font-size:10px; background:var(--surface-2);
+  border:1px solid var(--rule); border-radius:3px; padding:2px 5px; color:var(--ink-3);
+}
+.key.ok{border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
+.key.fix{border-color:color-mix(in srgb,var(--bad) 50%,transparent)}
+.flywheel{padding:18px}
+.fw-row{display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px dashed var(--rule)}
+.fw-row:last-of-type{border-bottom:0}
+.fw-row .k{font-size:12.5px; color:var(--ink-2)}
+.fw-row .v{font-family:var(--mono); font-size:14px; font-weight:600; font-variant-numeric:tabular-nums}
+.fw-note{font-size:12px; color:var(--ink-3); margin:12px 0 0; line-height:1.55}
+.log{margin-top:12px; border-top:1px solid var(--rule); padding-top:11px; display:flex; flex-direction:column; gap:5px; max-height:148px; overflow-y:auto}
+.log div{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); display:flex; gap:7px}
+.log b{font-weight:500}
+
+/* ---------- versions ---------- */
+.vs-head{display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; margin-bottom:18px}
+.vcard{flex:1 1 230px; padding:15px; border:1px solid var(--rule); border-radius:9px; background:var(--surface)}
+.vcard.cand{border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.vcard .t{display:flex; align-items:center; gap:8px; margin-bottom:3px}
+.vcard .t strong{font-family:var(--mono); font-size:15px}
+.tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; padding:2px 6px; border-radius:3px; background:var(--surface-2); color:var(--ink-3)}
+.tag.live{background:var(--accent-soft); color:var(--accent-ink)}
+.vcard p{margin:6px 0 0; font-size:12.5px; color:var(--ink-2); line-height:1.5}
+.cmp{width:100%; border-collapse:collapse; min-width:440px}
+.cmp th,.cmp td{text-align:right; padding:9px 12px; border-bottom:1px solid var(--rule); font-family:var(--mono); font-size:12.5px; font-variant-numeric:tabular-nums}
+.cmp th{font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); font-weight:500}
+.cmp th:first-child,.cmp td:first-child{text-align:left; font-family:var(--sans); font-size:13px; color:var(--ink-2)}
+.up{color:var(--accent)} .down{color:var(--bad)} .flat{color:var(--ink-3)}
+.regress{margin-top:16px; padding:13px 15px; border-radius:8px; background:var(--bad-soft); border:1px solid color-mix(in srgb,var(--bad) 30%,transparent)}
+.regress .lbl{color:var(--bad)}
+.regress ul{margin:8px 0 0; padding-left:17px; font-size:12.5px; color:var(--ink-2); display:flex; flex-direction:column; gap:3px}
+.replay{display:flex; align-items:center; gap:13px; flex-wrap:wrap; margin:16px 0}
+.note{font-size:12px; color:var(--ink-3); line-height:1.6; margin:14px 0 0; max-width:70ch}
+footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--rule); font-size:12px; color:var(--ink-3); line-height:1.65}
+footer a{color:var(--ink-2)}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand">
+      <h1>Verified Columns</h1>
+      <span class="v">prototype</span>
+    </div>
+    <span class="demo-chip">Demo · fictional companies</span>
+    <div class="tabs" role="tablist" aria-label="View">
+      <button role="tab" id="t-table" aria-selected="true" aria-controls="v-table">Table</button>
+      <button role="tab" id="t-review" aria-selected="false" aria-controls="v-review">Review</button>
+      <button role="tab" id="t-versions" aria-selected="false" aria-controls="v-versions">Versions</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="intro">
+    <h2>A table that knows how accurate it is.</h2>
+    <p>Every AI column carries a measured accuracy, a version number, and the right to say
+       <span class="em">&ldquo;not enough evidence&rdquo;</span> instead of guessing. The number comes from
+       one place: the corrections reviewers make to its own output. Run a column, review a few cells,
+       then replay a candidate version against everything you&rsquo;ve confirmed.</p>
+  </section>
+
+  <section id="v-table" role="tabpanel" aria-labelledby="t-table">
+    <div class="panel scroller"><table id="grid"></table></div>
+    <div class="panel drawer" id="drawer"></div>
+  </section>
+
+  <section id="v-review" role="tabpanel" aria-labelledby="t-review" hidden></section>
+  <section id="v-versions" role="tabpanel" aria-labelledby="t-versions" hidden></section>
+
+  <footer>
+    Interactive prototype for the Agentic&nbsp;Table research in
+    <span class="num">plans/agentic-table/</span>. Companies, runs and source quotes are invented
+    for the demo; agent runs are simulated on a timer, not real research.
+    The mechanism on show &mdash; abstention, cell-level evidence, corrections feeding a golden set,
+    and version replay gated on that set &mdash; is the part the PRD specifies.
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $ = (s,r)=> (r||document).querySelector(s);
+
+/* ---------------- data ---------------- */
+const ENTITIES = [
+  {id:"e1", name:"Northwind Logistics", dom:"northwind.example", emp:1400},
+  {id:"e2", name:"Verity Health",       dom:"verityhealth.example", emp:620},
+  {id:"e3", name:"Loamworks",           dom:"loamworks.example", emp:88},
+  {id:"e4", name:"Tesseral Systems",    dom:"tesseral.example", emp:2300},
+  {id:"e5", name:"Kestrel Robotics",    dom:"kestrel.example", emp:170},
+  {id:"e6", name:"Halcyon Freight",     dom:"halcyonfreight.example", emp:940}
+];
+
+const COLUMNS = [
+  { id:"icp", name:"ICP Score", version:18, prevAcc:78, priorCorrect:186, priorN:214,
+    cost:0.021, abstainBelow:0.60,
+    instruction:"Score 0-100 on fit with our ICP: enterprise buyer, US market, 500+ employees, already runs a CRM." },
+  { id:"sig", name:"Buying Signal", version:6, prevAcc:71, priorCorrect:70, priorN:88,
+    cost:0.034, abstainBelow:0.65,
+    instruction:"Classify the strongest current buying signal as High, Medium or Low, with a reason." },
+  { id:"act", name:"Next Action", version:3, prevAcc:88, priorCorrect:127, priorN:140,
+    cost:0.009, abstainBelow:0.55,
+    instruction:"Given the score and signal, pick the next action: Contact, Research, Nurture or Archive." }
+];
+
+function ev(kind, o){ return Object.assign({t:kind}, o); }
+
+const SEED = {
+  "e1:icp":{state:"filled", value:87, confidence:0.81, steps:[
+    ev("search",{query:"Northwind Logistics enterprise customers", results:9, ms:1210}),
+    ev("fetch",{url:"northwind.example/customers", title:"Customers — Northwind", chars:11940, ms:780}),
+    ev("extract",{claim:"Serves enterprise shippers across North America", source:"northwind.example/customers",
+        quote:"Trusted by enterprise shippers in 38 states and 4 Canadian provinces.", confidence:0.92}),
+    ev("reason",{text:"Enterprise ✓, US market ✓, 1,400 employees ✓. CRM stack not confirmed from public pages."}),
+    ev("output",{value:87, confidence:0.81, criteria:[
+      {n:"Enterprise buyer", m:true, s:"customers page"},
+      {n:"US market", m:true, s:"customers page"},
+      {n:"500+ employees", m:true, s:"careers page"},
+      {n:"Runs a CRM", m:null, s:null}]})]},
+
+  "e2:icp":{state:"filled", value:74, confidence:0.55, steps:[
+    ev("search",{query:"Verity Health procurement software", results:6, ms:990}),
+    ev("fetch",{url:"verityhealth.example/about", title:"About Verity Health", chars:4310, ms:610}),
+    ev("reason",{text:"Healthcare buyer, 620 employees. Regulated procurement may not match our motion — two criteria unresolved."}),
+    ev("output",{value:74, confidence:0.55, criteria:[
+      {n:"Enterprise buyer", m:true, s:"about page"},
+      {n:"US market", m:true, s:"about page"},
+      {n:"500+ employees", m:true, s:"about page"},
+      {n:"Runs a CRM", m:null, s:null}]})]},
+
+  "e3:icp":{state:"abstained", value:null, confidence:0.34, steps:[
+    ev("search",{query:"Loamworks company size customers", results:3, ms:1050}),
+    ev("fetch",{url:"loamworks.example", title:"Loamworks", chars:1280, ms:420}),
+    ev("reason",{text:"Single-page site, no customer list, no team page. Every criterion but headcount is unsupported."}),
+    ev("output",{value:null, confidence:0.34, criteria:[
+      {n:"Enterprise buyer", m:null, s:null},
+      {n:"US market", m:null, s:null},
+      {n:"500+ employees", m:false, s:"88 on file"},
+      {n:"Runs a CRM", m:null, s:null}]})]},
+
+  "e4:icp":{state:"confirmed", value:93, confidence:0.90, steps:[
+    ev("search",{query:"Tesseral Systems enterprise platform CRM", results:12, ms:1340}),
+    ev("fetch",{url:"tesseral.example/platform", title:"Platform — Tesseral", chars:20120, ms:910}),
+    ev("extract",{claim:"Publishes a CRM integration directory", source:"tesseral.example/platform",
+        quote:"Native two-way sync with the CRM your revenue team already runs.", confidence:0.95}),
+    ev("output",{value:93, confidence:0.90, criteria:[
+      {n:"Enterprise buyer", m:true, s:"platform page"},
+      {n:"US market", m:true, s:"platform page"},
+      {n:"500+ employees", m:true, s:"2,300 on file"},
+      {n:"Runs a CRM", m:true, s:"integration directory"}]})]},
+
+  "e5:icp":{state:"filled", value:58, confidence:0.72, steps:[
+    ev("search",{query:"Kestrel Robotics headcount market", results:7, ms:1120}),
+    ev("reason",{text:"170 employees fails the 500+ criterion outright; remaining criteria cannot lift the score."}),
+    ev("output",{value:58, confidence:0.72, criteria:[
+      {n:"Enterprise buyer", m:true, s:"customers page"},
+      {n:"US market", m:true, s:"customers page"},
+      {n:"500+ employees", m:false, s:"170 on file"},
+      {n:"Runs a CRM", m:null, s:null}]})]},
+
+  "e6:icp":{state:"corrected", value:69, confidence:0.63, corrected:81, steps:[
+    ev("search",{query:"Halcyon Freight enterprise contracts", results:8, ms:1180}),
+    ev("fetch",{url:"halcyonfreight.example/press", title:"Press — Halcyon Freight", chars:7640, ms:700}),
+    ev("reason",{text:"Agent read the enterprise contract as regional. Reviewer corrected 69 → 81; the miss is now in the golden set."}),
+    ev("output",{value:69, confidence:0.63, criteria:[
+      {n:"Enterprise buyer", m:null, s:null},
+      {n:"US market", m:true, s:"press page"},
+      {n:"500+ employees", m:true, s:"940 on file"},
+      {n:"Runs a CRM", m:null, s:null}]})]},
+
+  "e1:sig":{state:"filled", value:"High", confidence:0.77, steps:[
+    ev("search",{query:"Northwind Logistics hiring revenue operations", results:5, ms:1010}),
+    ev("extract",{claim:"Three open RevOps roles posted this month", source:"northwind.example/careers",
+        quote:"Revenue Operations Manager — posted 6 days ago.", confidence:0.88}),
+    ev("output",{value:"High", confidence:0.77, criteria:[
+      {n:"Hiring for the function", m:true, s:"careers page"},
+      {n:"Recent funding", m:null, s:null},
+      {n:"Leadership change", m:false, s:"no announcement"}]})]},
+
+  "e2:sig":{state:"abstained", value:null, confidence:0.41, steps:[
+    ev("search",{query:"Verity Health news funding leadership", results:4, ms:1160}),
+    ev("reason",{text:"Newest item found is 14 months old. Nothing in window qualifies as a current signal."}),
+    ev("output",{value:null, confidence:0.41, criteria:[
+      {n:"Hiring for the function", m:null, s:null},
+      {n:"Recent funding", m:null, s:null},
+      {n:"Leadership change", m:null, s:null}]})]},
+
+  "e3:sig":{state:"pending"},
+  "e4:sig":{state:"filled", value:"Medium", confidence:0.68, steps:[
+    ev("search",{query:"Tesseral Systems product launch 2026", results:9, ms:1240}),
+    ev("reason",{text:"A launch is a weak-to-moderate signal without a matching hire or budget cycle."}),
+    ev("output",{value:"Medium", confidence:0.68, criteria:[
+      {n:"Hiring for the function", m:false, s:"no open roles"},
+      {n:"Recent funding", m:null, s:null},
+      {n:"Leadership change", m:null, s:null}]})]},
+  "e5:sig":{state:"pending"},
+  "e6:sig":{state:"pending"},
+
+  "e1:act":{state:"confirmed", value:"Contact", confidence:0.86, steps:[
+    ev("reason",{text:"Score 87 clears the 80 threshold and the signal is High — route straight to contact."}),
+    ev("output",{value:"Contact", confidence:0.86, criteria:[
+      {n:"Score above 80", m:true, s:"ICP Score v18"},
+      {n:"Signal is High", m:true, s:"Buying Signal v6"}]})]},
+  "e2:act":{state:"filled", value:"Nurture", confidence:0.64, steps:[
+    ev("reason",{text:"Score below threshold and the signal column abstained — nurture rather than contact."}),
+    ev("output",{value:"Nurture", confidence:0.64, criteria:[
+      {n:"Score above 80", m:false, s:"74"},
+      {n:"Signal is High", m:null, s:"abstained"}]})]},
+  "e3:act":{state:"abstained", value:null, confidence:0.22, steps:[
+    ev("reason",{text:"Both upstream columns abstained. Deciding an action here would be a guess dressed as a decision."}),
+    ev("output",{value:null, confidence:0.22, criteria:[
+      {n:"Score above 80", m:null, s:"abstained"},
+      {n:"Signal is High", m:null, s:"not run"}]})]},
+  "e4:act":{state:"confirmed", value:"Contact", confidence:0.91, steps:[
+    ev("reason",{text:"Score 93 with a confirmed CRM criterion. Highest-confidence route on the table."}),
+    ev("output",{value:"Contact", confidence:0.91, criteria:[
+      {n:"Score above 80", m:true, s:"93"},
+      {n:"Signal is High", m:false, s:"Medium"}]})]},
+  "e5:act":{state:"filled", value:"Archive", confidence:0.79, steps:[
+    ev("reason",{text:"Headcount criterion fails outright; no path to fit this cycle."}),
+    ev("output",{value:"Archive", confidence:0.79, criteria:[
+      {n:"Score above 80", m:false, s:"58"},
+      {n:"Signal is High", m:null, s:"not run"}]})]},
+  "e6:act":{state:"filled", value:"Research", confidence:0.58, steps:[
+    ev("reason",{text:"Score was corrected upward by a reviewer; re-research before committing to an action."}),
+    ev("output",{value:"Research", confidence:0.58, criteria:[
+      {n:"Score above 80", m:true, s:"81 (corrected)"},
+      {n:"Signal is High", m:null, s:"not run"}]})]}
+};
+
+/* runtime state */
+const cells = {};
+for (const e of ENTITIES) for (const c of COLUMNS){
+  const k = e.id+":"+c.id;
+  cells[k] = Object.assign({entity:e.id, column:c.id, state:"pending", value:null,
+                            confidence:null, steps:[], corrected:null}, SEED[k]||{});
+}
+const live = {};              // per-column session judgments
+for (const c of COLUMNS) live[c.id] = {confirm:0, correct:0, reject:0};
+const judgedKeys = new Set();
+const auditLog = [];
+let selected = "e1:icp";
+let reviewIx = 0;
+
+const col = id => COLUMNS.find(c=>c.id===id);
+const ent = id => ENTITIES.find(e=>e.id===id);
+
+function accuracy(c){
+  const L = live[c.id];
+  const correct = c.priorCorrect + L.confirm;
+  const n = c.priorN + L.confirm + L.correct + L.reject;
+  return {pct: Math.round(correct/n*1000)/10, n};
+}
+function abstainRate(c){
+  const mine = ENTITIES.map(e=>cells[e.id+":"+c.id]);
+  const done = mine.filter(x=>x.state!=="pending" && x.state!=="running");
+  if(!done.length) return 0;
+  return Math.round(done.filter(x=>x.state==="abstained").length/done.length*100);
+}
+function reviewQueue(){
+  return Object.keys(cells).filter(k=>{
+    const c = cells[k];
+    if (judgedKeys.has(k)) return false;
+    if (c.state==="abstained") return true;
+    return c.state==="filled" && c.confidence!=null && c.confidence < 0.75;
+  }).sort((a,b)=>(cells[a].confidence??0)-(cells[b].confidence??0));
+}
+
+/* ---------------- table ---------------- */
+function cellFace(c){
+  if (c.state==="pending")  return {v:"—", meta:"not run"};
+  if (c.state==="running")  return {v:"researching…", meta:""};
+  if (c.state==="abstained") return {v:"abstained", meta:"no charge"};
+  const shown = c.state==="corrected" ? c.corrected : c.value;
+  return {v:String(shown), meta:"conf "+c.confidence.toFixed(2)};
+}
+
+function renderGrid(){
+  const head = ['<thead><tr>',
+    '<th class="th-static">Company</th>',
+    '<th class="th-static" style="text-align:right">Employees</th>'];
+  for (const c of COLUMNS){
+    const a = accuracy(c), d = Math.round((a.pct - c.prevAcc)*10)/10;
+    head.push(
+      '<th class="th-agent"><div class="top"><span class="nm">'+c.name+'</span>'+
+      '<span class="vpill">v'+c.version+'</span></div>'+
+      '<div class="gauge">'+
+        '<span class="g-lbl">Acc</span>'+
+        '<span class="bar"><i style="width:'+a.pct+'%"></i></span>'+
+        '<span class="g-val">'+a.pct.toFixed(1)+'%</span>'+
+        '<span class="g-lbl">n='+a.n+'</span>'+
+        '<span></span>'+
+        '<span class="g-delta">'+(d>=0?'▲ +':'▼ ')+Math.abs(d).toFixed(1)+' vs v'+(c.version-1)+'</span>'+
+      '</div>'+
+      '<div class="foot"><span>$'+c.cost.toFixed(3)+'/row</span>'+
+      '<span>'+abstainRate(c)+'% abstained</span></div>'+
+      '<button class="runbtn" data-run="'+c.id+'">Run on 6 rows</button></th>');
+  }
+  head.push('</tr></thead>');
+
+  const body = ['<tbody>'];
+  for (const e of ENTITIES){
+    body.push('<tr><td class="td-static"><div class="ent-name">'+e.name+'</div>'+
+      '<div class="ent-sub">'+e.dom+'</div></td>'+
+      '<td class="td-num" style="text-align:right">'+e.emp.toLocaleString('en-US')+'</td>');
+    for (const c of COLUMNS){
+      const k = e.id+":"+c.id, cl = cells[k], f = cellFace(cl);
+      const lowConf = cl.state==="filled" && cl.confidence!=null && cl.confidence < c.abstainBelow+0.15;
+      const mark = cl.state==="confirmed" ? '<span class="chk">✓</span>'
+                 : cl.state==="corrected" ? '<span class="chk corr">✎</span>' : '';
+      body.push('<td><button class="cell s-'+cl.state+(k===selected?' sel':'')+(lowConf?' low-conf':'')+
+        '" data-cell="'+k+'"><span class="dot"></span><span class="v">'+f.v+'</span>'+mark+
+        '<span class="meta">'+f.meta+'</span></button></td>');
+    }
+    body.push('</tr>');
+  }
+  body.push('</tbody>');
+  $("#grid").innerHTML = head.join("") + body.join("");
+}
+
+/* ---------------- evidence drawer ---------------- */
+function stepHTML(s){
+  const body = {
+    search:  ()=> '<div class="st-b">'+s.query+'</div><div class="src">'+s.results+' results · '+s.ms+' ms</div>',
+    fetch:   ()=> '<div class="st-b">'+s.title+'</div><div class="src">'+s.url+' · '+s.chars.toLocaleString('en-US')+' chars · '+s.ms+' ms</div>',
+    extract: ()=> '<div class="st-b">'+s.claim+'</div><blockquote class="quote">“'+s.quote+'”</blockquote>'+
+                  '<div class="src">'+s.source+' · verbatim · conf '+s.confidence.toFixed(2)+'</div>',
+    reason:  ()=> '<div class="st-b">'+s.text+'</div>',
+    output:  ()=> '<ul class="crit">'+s.criteria.map(c=>{
+                    const m = c.m===true?['yes','✓']: c.m===false?['no','✕']:['unk','?'];
+                    return '<li><span class="mk '+m[0]+'">'+m[1]+'</span><span class="cn">'+c.n+
+                           '</span><span class="cv">'+(c.s||'no evidence')+'</span></li>';
+                  }).join("")+'</ul>'
+  }[s.t];
+  return '<li'+(s.t==="output"?' class="out"':'')+'><div class="st-k">'+s.t+'</div>'+body()+'</li>';
+}
+
+function renderDrawer(){
+  const d = $("#drawer"), c = cells[selected];
+  if (!c || c.state==="pending"){
+    d.innerHTML = '<div class="empty">This cell has not been run. Use <b>Run on 6 rows</b> in a column header, then pick a cell to see its evidence.</div>';
+    return;
+  }
+  if (c.state==="running"){ d.innerHTML = '<div class="empty">Researching…</div>'; return; }
+
+  const C = col(c.column), E = ent(c.entity);
+  const shown = c.state==="corrected" ? c.corrected : c.value;
+  const big = c.state==="abstained" ? 'abstained' : String(shown);
+  const totalMs = c.steps.reduce((a,s)=>a+(s.ms||0), 0);
+
+  d.innerHTML =
+    '<div class="hd"><div><h3>'+C.name+' · '+E.name+'</h3>'+
+      '<div class="sub">run '+(c.entity+'-'+c.column)+'-v'+C.version+
+      ' · state '+c.state+(c.state==="corrected"?' (was '+c.value+')':'')+'</div></div>'+
+      '<div class="verdict"><span class="big" style="'+(c.state==="abstained"?'font-size:15px;color:var(--warn)':'')+'">'+big+'</span>'+
+      '<span class="cf">conf '+(c.confidence??0).toFixed(2)+' · threshold '+C.abstainBelow.toFixed(2)+'</span></div></div>'+
+    '<ol class="steps">'+c.steps.map(stepHTML).join("")+'</ol>'+
+    '<div class="runfoot">'+
+      '<span>version <b>v'+C.version+'</b></span>'+
+      '<span>latency <b>'+(totalMs||620)+' ms</b></span>'+
+      '<span>cost <b>'+(c.state==="abstained"?'$0.000 (abstained)':'$'+C.cost.toFixed(3))+'</b></span>'+
+      '<span>sources <b>'+c.steps.filter(s=>s.t==="fetch"||s.t==="extract").length+'</b></span>'+
+      '<span>instruction <b>'+C.instruction+'</b></span></div>';
+}
+
+/* ---------------- simulated column run ---------------- */
+let running = false;
+function runColumn(cid){
+  if (running) return;
+  const C = col(cid);
+  const targets = ENTITIES.map(e=>e.id+":"+cid).filter(k=>cells[k].state==="pending");
+  if (!targets.length){ pushLog(C.name, "nothing pending"); return; }
+  running = true;
+  document.querySelectorAll('[data-run]').forEach(b=>b.disabled = true);
+
+  targets.forEach((k,i)=>{
+    setTimeout(()=>{ cells[k].state = "running"; renderGrid(); }, i*200);
+    setTimeout(()=>{
+      const conf = 0.38 + Math.random()*0.5;
+      const E = ent(cells[k].entity);
+      if (conf < C.abstainBelow){
+        Object.assign(cells[k], {state:"abstained", value:null, confidence:conf, steps:[
+          ev("search",{query:E.name+" "+C.name.toLowerCase(), results:2+Math.floor(Math.random()*4), ms:900+Math.floor(Math.random()*500)}),
+          ev("reason",{text:"Public sources did not support a value above the "+C.abstainBelow.toFixed(2)+" threshold. Abstained rather than guessed — this cell is free."}),
+          ev("output",{value:null, confidence:conf, criteria:[{n:"Sufficient evidence", m:false, s:"below threshold"}]})
+        ]});
+        pushLog(C.name, E.name+" → abstained");
+      } else {
+        const opts = cid==="sig" ? ["High","Medium","Low"] : ["Contact","Research","Nurture","Archive"];
+        const val = cid==="icp" ? Math.round(45+Math.random()*50) : opts[Math.floor(Math.random()*opts.length)];
+        Object.assign(cells[k], {state:"filled", value:val, confidence:conf, steps:[
+          ev("search",{query:E.name+" "+C.name.toLowerCase(), results:5+Math.floor(Math.random()*8), ms:900+Math.floor(Math.random()*600)}),
+          ev("fetch",{url:E.dom+"/about", title:"About "+E.name, chars:3000+Math.floor(Math.random()*12000), ms:500+Math.floor(Math.random()*500)}),
+          ev("reason",{text:"Simulated run. In the real system this step holds the agent's working notes and the sources it rejected."}),
+          ev("output",{value:val, confidence:conf, criteria:[
+            {n:"Evidence found", m:true, s:E.dom+"/about"},
+            {n:"Cross-checked", m:conf>0.75 ? true : null, s:conf>0.75?"second source":null}]})
+        ]});
+        pushLog(C.name, E.name+" → "+val);
+      }
+      renderGrid(); if (selected===k) renderDrawer();
+      if (i===targets.length-1){
+        running = false;
+        document.querySelectorAll('[data-run]').forEach(b=>b.disabled=false);
+        renderReview();
+      }
+    }, i*200 + 900 + Math.random()*700);
+  });
+}
+
+/* ---------------- review ---------------- */
+function pushLog(colName, txt){
+  auditLog.unshift({c:colName, t:txt});
+  if (auditLog.length>40) auditLog.pop();
+  const el = $("#log"); if (el) el.innerHTML = logHTML();
+}
+const logHTML = ()=> auditLog.map(l=>'<div><b>'+l.c+'</b><span>'+l.t+'</span></div>').join("")
+  || '<div><span>No activity yet this session.</span></div>';
+
+function renderReview(){
+  const host = $("#v-review");
+  const q = reviewQueue();
+  if (reviewIx >= q.length) reviewIx = Math.max(0, q.length-1);
+  const totalJudged = COLUMNS.reduce((a,c)=>a+live[c.id].confirm+live[c.id].correct+live[c.id].reject, 0);
+
+  const side =
+    '<aside class="panel flywheel"><div class="lbl">Golden set this session</div>'+
+    COLUMNS.map(c=>{
+      const a = accuracy(c), L = live[c.id];
+      const added = L.confirm+L.correct+L.reject;
+      return '<div class="fw-row"><span class="k">'+c.name+
+        (added?' <span class="num" style="color:var(--accent)">+'+added+'</span>':'')+
+        '</span><span class="v">'+a.pct.toFixed(1)+'% <span class="g-lbl">n='+a.n+'</span></span></div>';
+    }).join("")+
+    '<p class="fw-note">Each verdict writes a <b>Judgment</b> with a frozen snapshot of the inputs. '+
+    'That snapshot is what a candidate version gets replayed against — which is why a correction is '+
+    'worth more here than in a spreadsheet, where it is just an edit.</p>'+
+    '<div class="log" id="log">'+logHTML()+'</div></aside>';
+
+  if (!q.length){
+    host.innerHTML = '<div class="rev-grid"><div class="panel rev-main">'+
+      '<div class="lbl">Review queue</div><h3 style="margin-top:8px">Queue clear.</h3>'+
+      '<p style="color:var(--ink-2);max-width:56ch">Nothing is below its confidence threshold right now. '+
+      'Run another column from the Table view to generate cells that need a human, '+
+      'or open <b>Versions</b> to replay a candidate against the '+totalJudged+' verdicts recorded this session.</p>'+
+      '</div>'+side+'</div>';
+    return;
+  }
+
+  const k = q[reviewIx], c = cells[k], C = col(c.column), E = ent(c.entity);
+  const out = c.steps.find(s=>s.t==="output");
+  const shown = c.state==="abstained" ? "abstained" : String(c.value);
+
+  host.innerHTML = '<div class="rev-grid"><div class="panel rev-main">'+
+    '<div class="rev-top"><span class="lbl">'+(reviewIx+1)+' of '+q.length+' pending</span>'+
+    '<span class="prog"><i style="width:'+((reviewIx)/q.length*100)+'%"></i></span>'+
+    '<span class="vpill">'+C.name+' v'+C.version+'</span></div>'+
+    '<p class="rev-q">'+C.instruction+'</p>'+
+    '<div class="ent-sub" style="margin-bottom:14px">'+E.name+' · '+E.dom+'</div>'+
+    '<div class="verdict" style="margin:0 0 14px; display:inline-flex">'+
+      '<span class="big" style="'+(c.state==="abstained"?'font-size:15px;color:var(--warn)':'')+'">'+shown+'</span>'+
+      '<span class="cf">conf '+(c.confidence??0).toFixed(2)+
+      (c.confidence < C.abstainBelow ? ' · below threshold' : ' · low')+'</span></div>'+
+    (out ? '<ul class="crit">'+out.criteria.map(cr=>{
+        const m = cr.m===true?['yes','✓']: cr.m===false?['no','✕']:['unk','?'];
+        return '<li><span class="mk '+m[0]+'">'+m[1]+'</span><span class="cn">'+cr.n+
+               '</span><span class="cv">'+(cr.s||'no evidence')+'</span></li>';
+      }).join("")+'</ul>' : '')+
+    '<div class="keys">'+
+      '<button class="key ok"  data-j="confirm"><kbd>J</kbd> Confirm</button>'+
+      '<button class="key fix" data-j="correct"><kbd>K</kbd> Correct</button>'+
+      '<button class="key"     data-j="reject"><kbd>D</kbd> Reject</button>'+
+      '<button class="key"     data-j="skip"><kbd>→</kbd> Skip</button>'+
+    '</div></div>'+side+'</div>';
+}
+
+function judge(kind){
+  const q = reviewQueue();
+  if (!q.length) return;
+  const k = q[Math.min(reviewIx, q.length-1)];
+  const c = cells[k], C = col(c.column), E = ent(c.entity);
+  if (kind === "skip"){ reviewIx = (reviewIx+1) % q.length; renderReview(); return; }
+
+  judgedKeys.add(k);
+  live[C.id][kind]++;
+  if (kind === "confirm"){
+    c.state = "confirmed";
+    pushLog(C.name, E.name+" confirmed");
+  } else if (kind === "correct"){
+    c.corrected = C.id==="icp" ? Math.min(100, (c.value??60)+12)
+                : C.id==="sig" ? "High" : "Contact";
+    c.state = "corrected";
+    pushLog(C.name, E.name+" corrected → "+c.corrected);
+  } else {
+    c.state = "abstained"; c.value = null;
+    pushLog(C.name, E.name+" rejected → abstained");
+  }
+  renderGrid(); renderDrawer(); renderReview(); renderVersions();
+}
+
+/* ---------------- versions ---------------- */
+let replayed = false, replaying = false;
+function renderVersions(){
+  const C = col("icp");
+  const a = accuracy(C);
+  const host = $("#v-versions");
+
+  const cand = {acc: Math.round((a.pct + 4.1)*10)/10, abst: 11, cost: 0.028, p50: 8.2};
+  const base = {acc: a.pct, abst: abstainRate(C) || 6, cost: C.cost, p50: 9.3};
+  const row = (label, b, c2, unit, higherBetter, dec)=>{
+    const d = Math.round((c2-b)*1000)/1000;
+    const cls = d===0 ? 'flat' : ((d>0)===higherBetter ? 'up' : 'down');
+    const sign = d>0?'+':'';
+    return '<tr><td>'+label+'</td><td>'+unit(b)+'</td><td>'+(replayed?unit(c2):'—')+'</td>'+
+           '<td class="'+(replayed?cls:'flat')+'">'+(replayed?sign+d.toFixed(dec):'—')+'</td></tr>';
+  };
+
+  host.innerHTML =
+    '<div class="vs-head">'+
+      '<div class="vcard"><div class="t"><strong>v'+C.version+'</strong><span class="tag live">Live</span></div>'+
+        '<p>'+C.instruction+'</p></div>'+
+      '<div class="vcard cand"><div class="t"><strong>v'+(C.version+1)+'</strong>'+
+        '<span class="tag">'+(replayed?'Replayed':'Candidate')+'</span></div>'+
+        '<p>Same criteria, but the CRM check now requires a named integration page rather than any mention of a CRM.</p></div>'+
+    '</div>'+
+    '<div class="replay">'+
+      '<button class="act primary" id="replay-btn"'+(replaying?' disabled':'')+'>'+
+        (replayed ? 'Replay again' : 'Replay v'+(C.version+1)+' on '+a.n+' judgments')+'</button>'+
+      '<span class="lbl" id="replay-status">'+
+        (replaying ? 'Replaying…' : replayed ? 'Complete · '+a.n+' rows' : 'Not yet replayed')+'</span>'+
+      '<span class="prog" style="max-width:190px"><i id="replay-bar" style="width:'+(replayed?100:0)+'%"></i></span>'+
+    '</div>'+
+    '<div class="panel scroller"><table class="cmp">'+
+      '<thead><tr><th>Metric</th><th>v'+C.version+' (live)</th><th>v'+(C.version+1)+'</th><th>Δ</th></tr></thead><tbody>'+
+      row('Accuracy on golden set', base.acc, cand.acc, v=>v.toFixed(1)+'%', true, 1)+
+      row('Abstain rate', base.abst, cand.abst, v=>v.toFixed(0)+'%', false, 0)+
+      row('Cost per row', base.cost, cand.cost, v=>'$'+v.toFixed(3), false, 3)+
+      row('p50 latency', base.p50, cand.p50, v=>v.toFixed(1)+'s', false, 1)+
+      '</tbody></table></div>'+
+    (replayed ?
+      '<div class="regress"><div class="lbl">3 regressions · rows v'+C.version+' got right and v'+(C.version+1)+' does not</div>'+
+      '<ul><li>Northwind Logistics — stricter CRM check now returns unknown, dropping 87 → 71</li>'+
+      '<li>Halcyon Freight — abstains where the reviewer had confirmed 81</li>'+
+      '<li>Tesseral Systems — unchanged value, confidence falls below the promote bar</li></ul></div>' : '')+
+    '<p class="note">Promotion is gated on this table, not on a demo. A candidate ships only when accuracy '+
+    'improves without an unacceptable rise in abstention or cost, and the regression list is the part a '+
+    'reviewer actually argues about. Promoting writes a new version and re-runs the column; the old cells '+
+    'are kept, not overwritten, so the change stays reversible.</p>'+
+    (replayed ? '<div class="replay"><button class="act primary" id="promote-btn">Promote v'+(C.version+1)+
+      ' and re-run column</button><span class="lbl">Accuracy +4.1 · 3 regressions accepted</span></div>' : '');
+
+  const rb = $("#replay-btn");
+  if (rb) rb.addEventListener("click", doReplay);
+  const pb = $("#promote-btn");
+  if (pb) pb.addEventListener("click", ()=>{
+    C.prevAcc = accuracy(C).pct;
+    C.version += 1; C.cost = 0.028;
+    C.priorCorrect = Math.round(C.priorCorrect + (accuracy(C).n * 0.041));
+    C.instruction = "Score 0-100 on fit with our ICP; the CRM criterion requires a named integration page.";
+    replayed = false;
+    pushLog(C.name, "promoted to v"+C.version);
+    renderGrid(); renderDrawer(); renderVersions(); renderReview();
+  });
+}
+
+function doReplay(){
+  if (replaying) return;
+  replaying = true; replayed = false;
+  renderVersions();
+  const bar = $("#replay-bar"), st = $("#replay-status");
+  let p = 0;
+  const iv = setInterval(()=>{
+    p += 6 + Math.random()*11;
+    if (p >= 100){
+      clearInterval(iv);
+      replaying = false; replayed = true;
+      renderVersions();
+      return;
+    }
+    if (bar) bar.style.width = p+"%";
+    if (st) st.textContent = "Replaying… "+Math.floor(p)+"%";
+  }, 130);
+}
+
+/* ---------------- wiring ---------------- */
+document.addEventListener("click", (e)=>{
+  const cellBtn = e.target.closest("[data-cell]");
+  if (cellBtn){ selected = cellBtn.dataset.cell; renderGrid(); renderDrawer();
+                $("#drawer").scrollIntoView({behavior:"smooth", block:"nearest"}); return; }
+  const runBtn = e.target.closest("[data-run]");
+  if (runBtn){ runColumn(runBtn.dataset.run); return; }
+  const jBtn = e.target.closest("[data-j]");
+  if (jBtn){ judge(jBtn.dataset.j); return; }
+});
+
+document.addEventListener("keydown", (e)=>{
+  if ($("#v-review").hidden) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const map = {j:"confirm", k:"correct", d:"reject", arrowright:"skip"};
+  const act = map[e.key.toLowerCase()];
+  if (act){ e.preventDefault(); judge(act); }
+});
+
+const TABS = [["t-table","v-table"],["t-review","v-review"],["t-versions","v-versions"]];
+for (const [tid, pid] of TABS){
+  $("#"+tid).addEventListener("click", ()=>{
+    for (const [t2,p2] of TABS){
+      const on = t2===tid;
+      $("#"+t2).setAttribute("aria-selected", String(on));
+      $("#"+p2).hidden = !on;
+    }
+    if (pid==="v-review") renderReview();
+    if (pid==="v-versions") renderVersions();
+  });
+}
+
+renderGrid(); renderDrawer(); renderReview(); renderVersions();
+</script>
