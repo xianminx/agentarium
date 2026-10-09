@@ -170,5 +170,5 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@agentarium.io")
 
-# OpenAI API Key (for agent execution)
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+# Gemini API Key (for agent execution, via the OpenAI-compatible endpoint)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")

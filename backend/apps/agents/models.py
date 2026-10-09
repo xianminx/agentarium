@@ -8,7 +8,7 @@ class Agent(models.Model):
     )
     name = models.CharField(max_length=120)
     description = models.TextField(blank=True)
-    model = models.CharField(max_length=50, default="gpt-4o-mini")
+    model = models.CharField(max_length=50, default="gemini-3.5-flash-lite")
     temperature = models.FloatField(default=0.7)
     created_at = models.DateTimeField(auto_now_add=True)
 

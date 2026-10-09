@@ -22,7 +22,7 @@ A production-ready web application for managing AI agents and executing tasks us
 - **Celery** - Async task processing
 - **Redis** - Caching & message broker
 - **PostgreSQL** - Production database (SQLite for dev)
-- **OpenAI SDK** - AI agent execution
+- **OpenAI SDK** - AI agent execution (Gemini via OpenAI-compatible endpoint)
 - **pytest** - Testing framework
 
 ### Frontend
@@ -66,7 +66,7 @@ uv pip install -r pyproject.toml
 
 # Copy environment file
 cp .env.example .env
-# Edit .env and set your OPENAI_API_KEY
+# Edit .env and set your GEMINI_API_KEY
 
 # Run migrations
 python manage.py migrate
@@ -276,7 +276,7 @@ See `.env.example` for all available environment variables:
 
 ### Required
 
-- `OPENAI_API_KEY` - OpenAI API key for agent execution
+- `GEMINI_API_KEY` - Gemini API key for agent execution
 - `DJANGO_SECRET_KEY` - Django secret key (generate new for production)
 
 ### Database
@@ -369,11 +369,11 @@ python manage.py collectstatic
 - Check Celery logs for errors
 - Verify Redis connection
 
-### OpenAI API Error
+### Gemini API Error
 
-- Verify `OPENAI_API_KEY` is set in `.env`
+- Verify `GEMINI_API_KEY` is set in `.env`
 - Check API key validity
-- Review OpenAI API rate limits
+- Review Gemini API rate limits
 
 ### CORS Errors
 

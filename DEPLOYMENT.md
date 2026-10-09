@@ -59,8 +59,8 @@ DATABASE_URL=postgresql://user:password@db:5432/agentarium
 # Redis
 REDIS_URL=redis://redis:6379/1
 
-# OpenAI
-OPENAI_API_KEY=sk-your-api-key
+# Gemini
+GEMINI_API_KEY=your-api-key
 
 # CORS
 CORS_ALLOWED_ORIGINS=https://yourdomain.com

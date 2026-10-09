@@ -20,7 +20,7 @@ class TestAgentModel:
         assert agent.name == "Test Agent"
         assert agent.owner == user
         assert agent.description == ""
-        assert agent.model == "gpt-4o-mini"
+        assert agent.model == "gemini-3.5-flash-lite"
         assert agent.temperature == 0.7
         assert agent.created_at is not None
 

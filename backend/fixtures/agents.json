@@ -6,7 +6,7 @@
       "owner": 2,
       "name": "Auto-GPT",
       "description": "Provider: Significant Gravitas. Autonomous open-source agent that breaks complex goals into sub-tasks and executes them with GPT-4/GPT-3.5. Website: https://github.com/Significant-Gravitas/Auto-GPT",
-      "model": "gpt-4o",
+      "model": "gemini-3.5-flash-lite",
       "temperature": 0.3,
       "created_at": "2025-11-01T00:00:00Z"
     }
@@ -18,7 +18,7 @@
       "owner": 2,
       "name": "BabyAGI",
       "description": "Provider: Yohei Nakajima. Lightweight task-management agent that dynamically creates, prioritizes, and completes to-do lists using vector search. Website: https://github.com/yoheinakajima/babyagi",
-      "model": "gpt-4o-mini",
+      "model": "gemini-3.5-flash-lite",
       "temperature": 0.2,
       "created_at": "2025-11-01T00:00:00Z"
     }
@@ -30,7 +30,7 @@
       "owner": 2,
       "name": "AgentGPT",
       "description": "Provider: Reworkd AI. Browser-based launcher that spins up autonomous GPT agents to iterate on goals and surface results in real time. Website: https://agentgpt.reworkd.ai/",
-      "model": "gpt-4.1",
+      "model": "gemini-3.5-flash-lite",
       "temperature": 0.4,
       "created_at": "2025-11-01T00:00:00Z"
     }
@@ -54,7 +54,7 @@
       "owner": 2,
       "name": "GPT Engineer",
       "description": "Provider: GPT Engineer Org. Specification-driven agent that asks clarifying questions, drafts architecture, and scaffolds entire codebases. Website: https://github.com/gpt-engineer-org/gpt-engineer",
-      "model": "gpt-4o-mini",
+      "model": "gemini-3.5-flash-lite",
       "temperature": 0.25,
       "created_at": "2025-11-01T00:00:00Z"
     }
@@ -66,7 +66,7 @@
       "owner": 2,
       "name": "CrewAI",
       "description": "Provider: CrewAI. Multi-agent orchestration framework that coordinates specialist agents for research, ops, and product workflows. Website: https://www.crewai.com/",
-      "model": "gpt-4o",
+      "model": "gemini-3.5-flash-lite",
       "temperature": 0.35,
       "created_at": "2025-11-01T00:00:00Z"
     }

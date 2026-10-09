@@ -64,7 +64,7 @@ class TestAgentSerializer:
         assert serializer.is_valid()
         agent = serializer.save(owner=user)
 
-        assert agent.model == "gpt-4o-mini"
+        assert agent.model == "gemini-3.5-flash-lite"
         assert agent.temperature == 0.7
         assert agent.description == ""
 

@@ -26,7 +26,7 @@ export function AgentModal({ open, onOpenChange, editing }: Props) {
         temperature: editing.temperature,
       });
     } else {
-      reset({ name: "", description: "", model: "gpt-4o", temperature: 0.7 });
+      reset({ name: "", description: "", model: "gemini-3.5-flash-lite", temperature: 0.7 });
     }
   }, [editing, reset]);
 

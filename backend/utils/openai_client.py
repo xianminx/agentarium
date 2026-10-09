@@ -6,36 +6,38 @@ from typing import Any
 from openai import OpenAI
 from django.conf import settings
 
-OPENAI_API_KEY = getattr(settings, "OPENAI_API_KEY", None)
+GEMINI_API_KEY = getattr(settings, "GEMINI_API_KEY", None)
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 _client: OpenAI | None = None
 
 
 def _get_client() -> OpenAI:
-    """Create a singleton OpenAI client using the v1+ SDK."""
+    """Create a singleton client pointed at Gemini's OpenAI-compatible API."""
     global _client
     if _client is not None:
         return _client
 
-    kwargs: dict[str, Any] = {}
-    if OPENAI_API_KEY:
-        kwargs["api_key"] = OPENAI_API_KEY
+    kwargs: dict[str, Any] = {"base_url": GEMINI_BASE_URL}
+    if GEMINI_API_KEY:
+        kwargs["api_key"] = GEMINI_API_KEY
     _client = OpenAI(**kwargs)
     return _client
 
 
 def run_agent_sync(agent, prompt, max_tokens=1024):
     """
-    Synchronous wrapper calling OpenAI chat completion using the modern
-    `openai` SDK. In local/dev environments without an API key we fall
+    Synchronous wrapper calling Gemini chat completion through the
+    OpenAI-compatible endpoint with the `openai` SDK. In local/dev environments without an API key we fall
     back to a deterministic mock response so tests stay offline.
     """
     system = agent.description or "You are an assistant."
-    model = getattr(agent, "model", "gpt-4o-mini")
+    model = getattr(agent, "model", DEFAULT_MODEL)
     temperature = getattr(agent, "temperature", 0.7)
 
     # If no API key is configured, return a mock response for development
-    if not OPENAI_API_KEY:
-        return f"[Mock Response] I received your message: '{prompt[:100]}...'\n\nThis is a simulated response because no OpenAI API key is configured. To use real AI responses, please set OPENAI_API_KEY in your environment."
+    if not GEMINI_API_KEY:
+        return f"[Mock Response] I received your message: '{prompt[:100]}...'\n\nThis is a simulated response because no Gemini API key is configured. To use real AI responses, please set GEMINI_API_KEY in your environment."
 
     try:
         client = _get_client()
